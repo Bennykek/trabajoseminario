@@ -1,0 +1,221 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  color: #203b31;
+  font-family: Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 5%;
+  background: white;
+}
+
+.logo img {
+  display: block;
+  width: 210px;
+  max-width: 100%;
+  height: auto;
+}
+
+.volver {
+  color: #225e49;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+main {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 80px);
+  padding: 38px 18px;
+  background: url('/fondocitas.webp') center / cover fixed;
+  isolation: isolate;
+}
+
+main::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: '';
+  background: #10271dcc;
+}
+
+form {
+  width: 100%;
+  max-width: 560px;
+  padding: 28px 32px;
+  border: 1px solid #ffffff80;
+  border-radius: 14px;
+  background: #fffefa;
+  box-shadow: 0 15px 45px #0003;
+}
+
+h1 {
+  margin: 0 0 10px;
+  font: bold clamp(26px, 4vw, 34px) Georgia, serif;
+}
+
+h2 {
+  margin: 24px 0 14px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid #e5ebe2;
+  color: #276b4b;
+  font-size: 16px;
+}
+
+form > p {
+  color: #68776e;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+label {
+  display: block;
+  margin: 14px 0 6px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+input, select, textarea {
+  display: block;
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #d5dfd4;
+  border-radius: 7px;
+  background: white;
+  color: #203b31;
+  font: inherit;
+  font-size: 14px;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #39805a;
+  box-shadow: 0 0 0 3px #39805a20;
+}
+
+textarea { resize: vertical; }
+
+small {
+  display: block;
+  margin-top: 5px;
+  color: #68776e;
+  font-size: 12px;
+}
+
+.aviso {
+  margin-top: 18px;
+  padding: 10px 12px;
+  border-radius: 7px;
+  background: #f1f4eb;
+}
+
+.error {
+  color: #b42318 !important;
+  background: #fff0ee;
+  padding: 10px;
+  border-radius: 7px;
+}
+
+button, .btn-inicio {
+  display: inline-block;
+  width: 100%;
+  margin-top: 15px;
+  padding: 13px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #225e49;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+
+button:hover:not(:disabled), .btn-inicio:hover {
+  background: #39805a;
+  transform: translateY(-2px);
+}
+
+button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+/* Confirmación */
+.confirmacion {
+  display: grid;
+  grid-template-columns: 1fr .85fr;
+  align-items: center;
+  gap: 25px;
+  width: 100%;
+  max-width: 850px;
+  padding: 28px;
+  border-radius: 18px;
+  background: white;
+  box-shadow: 0 15px 45px #0003;
+}
+
+.confirmacion-texto p {
+  color: #68776e;
+  line-height: 1.8;
+}
+
+.confirmacion img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.check {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  background: #e5f4e9;
+  color: #207443;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  header { padding: 12px 4%; }
+  .logo img { width: 150px; }
+  .volver { font-size: 12px; }
+
+  main {
+    padding: 24px 12px;
+    background-attachment: scroll;
+  }
+
+  form { padding: 24px 19px; }
+
+  .confirmacion {
+    grid-template-columns: 1fr;
+    padding: 22px;
+  }
+
+  .confirmacion img {
+    grid-row: 1;
+    max-height: 260px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}

@@ -1,0 +1,104 @@
+
+<header class="barra">
+  <a routerLink="/" class="logo">
+    <img src="/logo.webp" alt="Vet Ayacucho">
+  </a>
+  <button class="salir" (click)="cerrarSesion()">Cerrar sesión</button>
+</header>
+
+<main>
+  <section class="encabezado">
+    <span class="etiqueta">ADMINISTRACIÓN</span>
+    <h1>Solicitudes de citas</h1>
+    <p>Gestiona solicitudes y programa citas.</p>
+  </section>
+
+  <p class="error" *ngIf="error" role="alert">{{ error }}</p>
+
+  <section class="resumen">
+    <button class="tarjeta" [class.seleccionada]="filtro === 'todas'"
+      (click)="filtro = 'todas'">
+      Total <strong>{{ citas.length }}</strong>
+    </button>
+    <button class="tarjeta" [class.seleccionada]="filtro === 'pendiente'"
+      (click)="filtro = 'pendiente'">
+      Pendientes <strong>{{ contar('pendiente') }}</strong>
+    </button>
+    <button class="tarjeta" [class.seleccionada]="filtro === 'aceptada'"
+      (click)="filtro = 'aceptada'">
+      Aceptadas <strong>{{ contar('aceptada') }}</strong>
+    </button>
+    <button class="tarjeta" [class.seleccionada]="filtro === 'rechazada'"
+      (click)="filtro = 'rechazada'">
+      Rechazadas <strong>{{ contar('rechazada') }}</strong>
+    </button>
+  </section>
+
+  <section class="listado">
+    <h2>Solicitudes ({{ citasFiltradas.length }})</h2>
+
+    <p *ngIf="cargando">Cargando...</p>
+    <p *ngIf="!cargando && !citasFiltradas.length">
+      No hay solicitudes.
+    </p>
+
+    <div class="tabla-contenedor" *ngIf="!cargando && citasFiltradas.length">
+      <table>
+        <thead>
+          <tr>
+            <th>Solicitud</th>
+            <th>Propietario</th>
+            <th>Celular</th>
+            <th>Mascota</th>
+            <th>Detalles</th>
+            <th>Motivo</th>
+            <th>Estado</th>
+            <th>Programación</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of citasFiltradas">
+            <td>{{ c.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ c.propietario }}</td>
+            <td>{{ c.celular }}</td>
+            <td>{{ c.mascota }}</td>
+            <td>{{ c.tipo }}<br>Edad: {{ c.edad }}<br>Sexo: {{ c.sexo }}</td>
+            <td class="motivo">{{ c.motivo }}</td>
+            <td>
+              <span class="estado" [ngClass]="c.estado">
+                {{ c.estado | titlecase }}
+              </span>
+            </td>
+            <td class="programacion">
+              <input type="date" [(ngModel)]="c.fecha_cita"
+                [ngModelOptions]="{standalone: true}">
+              <input type="time" [(ngModel)]="c.hora_cita"
+                [ngModelOptions]="{standalone: true}">
+              <button class="aceptar" (click)="guardarProgramacion(c)"
+                [disabled]="actualizandoId === c.id">
+                Programar
+              </button>
+            </td>
+            <td class="acciones-cita">
+              <button class="aceptar" (click)="cambiarEstado(c, 'aceptada')"
+                [disabled]="actualizandoId === c.id || c.estado === 'aceptada'">
+                Aceptar
+              </button>
+              <button class="rechazar" (click)="cambiarEstado(c, 'rechazada')"
+                [disabled]="actualizandoId === c.id || c.estado === 'rechazada'">
+                Rechazar
+              </button>
+              <button class="pendiente" *ngIf="c.estado !== 'pendiente'"
+                (click)="cambiarEstado(c, 'pendiente')"
+                [disabled]="actualizandoId === c.id">
+                Pendiente
+              </button>
+              <span *ngIf="actualizandoId === c.id">Guardando...</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>

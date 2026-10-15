@@ -1,0 +1,123 @@
+<header>
+  <a class="logo" routerLink="/" aria-label="Vet Ayacucho - Inicio">
+    <img src="/logo.webp" alt="Logo de Vet Ayacucho">
+  </a>
+
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#precios">Precios</a>
+    <a href="#testimonios">Testimonios</a>
+    <a href="#contacto">Contáctenos</a>
+  </nav>
+
+  <a class="btn" routerLink="/solicitar-cita">Hacer cita</a>
+</header>
+
+<main>
+  <section class="hero" id="inicio">
+    <div>
+      <h1>Cuidamos de tus mascotas
+        <span>como si fueran nuestras</span>
+      </h1>
+      <p>Bienvenido a nuestra veterinaria en Ayacucho. Cuidamos la salud y el bienestar de tus compañeros de vida.</p>
+      <a class="btn" routerLink="/solicitar-cita">Hacer cita →</a>
+      <a class="btn whatsapp" href="https://wa.me/51999999999" target="_blank" rel="noopener noreferrer">Contactar por WhatsApp</a>
+    </div>
+
+    <div class="mascota">
+      <img src="/perroinicio.webp" alt="Perro de la veterinaria">
+    </div>
+  </section>
+
+  <section id="servicios">
+    <h2>Nuestros servicios</h2>
+    <p>Atención para cuidar a tu mascota en cada etapa de su vida.</p>
+
+    <div class="grid">
+      <article>
+        <img src="/consulta.webp" alt="Consulta veterinaria" loading="lazy">
+        <h3>Consulta veterinaria</h3>
+        <p>Evaluación general y orientación para el cuidado de tu mascota.</p>
+      </article>
+
+      <article>
+        <img src="/vacuna.webp" alt="Vacunación de mascotas" loading="lazy">
+        <h3>Vacunación</h3>
+        <p>Atención preventiva según las necesidades de tu mascota.</p>
+      </article>
+
+      <article>
+        <img src="/control.webp" alt="Control preventivo de mascotas" loading="lazy">
+        <h3>Control preventivo</h3>
+        <p>Seguimiento de su salud y bienestar.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="precios" class="alterno">
+    <h2>Precios de nuestros servicios</h2>
+    <p>Consulta los precios disponibles directamente con la veterinaria.</p>
+    <a class="btn" href="https://wa.me/51999999999" target="_blank" rel="noopener noreferrer">Consultar precios</a>
+  </section>
+
+  <section id="testimonios">
+    <h2>Lo más importante es su bienestar</h2>
+    <p>Próximamente encontrarás aquí testimonios reales de nuestros clientes.</p>
+  </section>
+
+  <!-- Contacto y ubicación en una sola sección -->
+  <section id="contacto" class="contacto">
+    <div class="contacto-info">
+      <span class="etiqueta">VET AYACUCHO</span>
+      <h2>Estamos para ayudarte</h2>
+      <p>Comunícate con nosotros o visítanos para consultar por la atención de tu mascota.</p>
+
+      <div class="dato">
+        <span class="icono">⌖</span>
+        <div>
+          <strong>Dirección de referencia</strong>
+          <p>Jr. Quinua N.º 178, Cercado, Ayacucho</p>
+        </div>
+      </div>
+
+      <div class="dato">
+        <span class="icono">☎</span>
+        <div>
+          <strong>Teléfono</strong>
+          <p>965 939 522</p>
+        </div>
+      </div>
+
+      <div class="contacto-botones">
+        <a class="btn claro" routerLink="/solicitar-cita">Solicitar una cita</a>
+        <a class="btn whatsapp" href="https://wa.me/51999999999" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      </div>
+
+      <a
+        class="como-llegar"
+        href="https://www.google.com/maps/dir//Cl%C3%ADnica+Veterinaria+San+Mart%C3%ADn+De+Porres,+Jr.+Quinua+N%C2%B0+178+-+Cercado,+Ayacucho/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >Cómo llegar con Google Maps ↗</a>
+    </div>
+
+    <div class="mapa">
+      <iframe
+        src="https://maps.google.com/maps?q=Cl%C3%ADnica%20Veterinaria%20San%20Mart%C3%ADn%20de%20Porres%2C%20Jr.%20Quinua%20178%2C%20Ayacucho&t=&z=16&ie=UTF8&iwloc=&output=embed"
+        title="Mapa de ubicación de referencia en Ayacucho"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <a class="logo" routerLink="/" aria-label="Vet Ayacucho - Inicio">
+    <img src="/logo.webp" alt="Logo de Vet Ayacucho">
+  </a>
+  <span>Cuidado y bienestar animal</span>
+  <a routerLink="/admin/login">Acceso del personal</a>
+</footer>

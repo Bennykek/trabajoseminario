@@ -1,0 +1,264 @@
+
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f1f4eb;
+  color: #203b31;
+  font-family: Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 14px 5%;
+  background: white;
+}
+
+.logo img {
+  display: block;
+  width: 200px;
+  max-width: 100%;
+  height: auto;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 7px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.secundario {
+  background: #edf2ec;
+  color: #225e49;
+}
+
+.salir,
+.rechazar {
+  background: #b42318;
+  color: white;
+}
+
+main {
+  max-width: 1500px;
+  margin: auto;
+  padding: 36px 5%;
+}
+
+.etiqueta {
+  color: #39805a;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+h1 {
+  margin: 10px 0;
+  font-family: Georgia, serif;
+  font-size: clamp(30px, 4vw, 42px);
+}
+
+.encabezado p {
+  color: #68776e;
+}
+
+.resumen {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 28px 0;
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 22px;
+  border: 1px solid #e0e7dc;
+  background: white;
+  color: #203b31;
+  text-align: left;
+}
+
+.tarjeta.seleccionada {
+  border: 2px solid #39805a;
+}
+
+.tarjeta span {
+  color: #68776e;
+  font-size: 14px;
+}
+
+.tarjeta strong {
+  font-size: 30px;
+}
+
+.listado {
+  padding: 24px;
+  border-radius: 12px;
+  background: white;
+}
+
+.listado-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.listado-titulo h2 {
+  margin: 0;
+  font-size: 21px;
+}
+
+.listado-titulo span {
+  color: #68776e;
+  font-size: 13px;
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+th,
+td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #e5ebe2;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: #f7f9f5;
+  color: #53665a;
+  white-space: nowrap;
+}
+
+.motivo {
+  min-width: 180px;
+  max-width: 280px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.estado {
+  display: inline-block;
+  padding: 6px 9px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.estado.pendiente {
+  background: #fff1cf;
+  color: #805b00;
+}
+
+.estado.aceptada {
+  background: #dff4e5;
+  color: #207443;
+}
+
+.estado.rechazada {
+  background: #fde7e7;
+  color: #b42318;
+}
+
+.acciones-cita {
+  min-width: 130px;
+}
+
+.acciones-cita button {
+  display: block;
+  width: 100%;
+  margin-bottom: 7px;
+  font-size: 12px;
+}
+
+.aceptar {
+  background: #225e49;
+  color: white;
+}
+
+.pendiente {
+  background: #edf2ec;
+  color: #225e49;
+}
+
+.error {
+  padding: 12px;
+  border-radius: 7px;
+  background: #fde7e7;
+  color: #b42318;
+}
+
+@media (max-width: 800px) {
+  .resumen {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  main {
+    padding: 28px 4%;
+  }
+
+  .listado {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 450px) {
+  .resumen {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .tarjeta {
+    padding: 15px;
+  }
+
+  .tarjeta strong {
+    font-size: 25px;
+  }
+}
+
+.programacion {
+  min-width: 170px;
+
+  input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 6px;
+    padding: 7px;
+    border: 1px solid #d5ded7;
+    border-radius: 6px;
+  }
+}

@@ -1,0 +1,46 @@
+
+<main class="login-page">
+  <section class="login-card">
+    <a routerLink="/" class="logo" aria-label="Volver al inicio">
+      <img src="/logo.webp" alt="Logo de Vet Ayacucho">
+    </a>
+
+    <h1>Acceso administrativo</h1>
+    <p>Inicia sesión para revisar las solicitudes de citas.</p>
+
+    <form #form="ngForm" (ngSubmit)="iniciarSesion()">
+      <label for="correo">Correo electrónico</label>
+      <input
+        id="correo"
+        name="correo"
+        type="email"
+        [(ngModel)]="correo"
+        required
+        email
+        autocomplete="username"
+        placeholder="admin@ejemplo.com"
+      >
+
+      <label for="contrasena">Contraseña</label>
+      <input
+        id="contrasena"
+        name="contrasena"
+        type="password"
+        [(ngModel)]="contrasena"
+        required
+        autocomplete="current-password"
+        placeholder="Ingresa tu contraseña"
+      >
+
+      <p class="error" *ngIf="error" role="alert">
+        {{ error }}
+      </p>
+
+      <button type="submit" [disabled]="form.invalid || cargando">
+        {{ cargando ? 'Ingresando...' : 'Iniciar sesión' }}
+      </button>
+    </form>
+
+    <a routerLink="/" class="volver">Volver al inicio</a>
+  </section>
+</main>

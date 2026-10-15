@@ -1,0 +1,125 @@
+<header>
+  <a routerLink="/" class="logo" aria-label="Volver al inicio">
+    <img src="/logo.webp" alt="Logo de Vet Ayacucho">
+  </a>
+  <a routerLink="/" class="volver">← Volver al inicio</a>
+</header>
+
+<main>
+
+  <form *ngIf="!enviado" #form="ngForm" (ngSubmit)="enviar()">
+    <h1>Solicitar una cita</h1>
+    <p>Completa los datos para solicitar atención para tu mascota.</p>
+
+    <h2>Datos del propietario</h2>
+
+    <label for="propietario">Nombre y apellidos</label>
+    <input
+      id="propietario"
+      name="propietario"
+      [(ngModel)]="cita.propietario"
+      required
+      maxlength="120"
+    >
+
+    <label for="celular">Número de celular</label>
+    <input
+      id="celular"
+      name="celular"
+      type="tel"
+      [(ngModel)]="cita.celular"
+      placeholder="Ej. 987654321"
+      maxlength="9"
+      minlength="9"
+      pattern="[0-9]{9}"
+      inputmode="numeric"
+      required
+    >
+
+    <h2>Datos de la mascota</h2>
+
+    <label for="mascota">Nombre de la mascota</label>
+    <input
+      id="mascota"
+      name="mascota"
+      [(ngModel)]="cita.mascota"
+      required
+      maxlength="100"
+    >
+
+    <label for="edad">Edad</label>
+    <input
+      id="edad"
+      name="edad"
+      [(ngModel)]="cita.edad"
+      placeholder="Ej. 2 años"
+      maxlength="30"
+      required
+    >
+
+    <label for="tipo">Tipo de mascota</label>
+    <input
+      id="tipo"
+      name="tipo"
+      [(ngModel)]="cita.tipo"
+      placeholder="Ej. Perro - Labrador"
+      maxlength="100"
+      required
+    >
+    <small>Especificar raza si es posible.</small>
+
+    <label for="sexo">Sexo</label>
+    <select
+      id="sexo"
+      name="sexo"
+      [(ngModel)]="cita.sexo"
+      required
+    >
+      <option value="" disabled>Selecciona una opción</option>
+      <option value="Macho">Macho</option>
+      <option value="Hembra">Hembra</option>
+      <option value="No sé">No lo sé</option>
+    </select>
+
+    <h2>Motivo de consulta</h2>
+
+    <label for="motivo">Describe el motivo de la cita</label>
+    <textarea
+      id="motivo"
+      name="motivo"
+      [(ngModel)]="cita.motivo"
+      required
+      maxlength="1000"
+      rows="4"
+      placeholder="Cuéntanos qué necesita tu mascota"
+    ></textarea>
+
+    <p class="aviso">
+      La solicitud quedará pendiente hasta que la veterinaria la revise.
+    </p>
+
+    <p *ngIf="error" class="error" role="alert">{{ error }}</p>
+
+    <button type="submit" [disabled]="form.invalid || enviando">
+      {{ enviando ? 'Enviando...' : 'Enviar solicitud →' }}
+    </button>
+  </form>
+
+  <!-- Confirmación después de guardar -->
+  <section *ngIf="enviado" class="confirmacion" role="status">
+    <div class="confirmacion-texto">
+      <span class="check">✓</span>
+      <h1>¡Gracias por solicitar una cita!</h1>
+      <p>
+        Nos pondremos en contacto con usted para coordinar la atención
+        de su mascota.
+      </p>
+      <a class="btn-inicio" routerLink="/">Volver al inicio →</a>
+    </div>
+
+    <img
+      src="/graciasporcita.webp"
+      alt="Gracias por confiar en nuestra veterinaria"
+    >
+  </section>
+</main>
