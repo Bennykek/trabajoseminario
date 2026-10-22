@@ -28,34 +28,31 @@ export class CitasService {
   }
 
   async listar(): Promise<Cita[]> {
-    const { data, error } = await supabase
-      .from('citas')
-      .select('*')
-      .order('created_at', { ascending: false });
-
+    const { data, error } = await supabase.from('citas')
+      .select('*').order('created_at', { ascending: false });
     if (error) throw error;
     return (data ?? []) as Cita[];
   }
 
-  async actualizarEstado(id: number, estado: Cita['estado']) {
-    const { error } = await supabase
-      .from('citas')
-      .update({ estado })
-      .eq('id', id);
+  async actualizarEstado(id: number, estado: Cita['estado']): Promise<void> {
+    const cambios = estado === 'pendiente'
+      ? { estado, fecha_cita: null, hora_cita: null }
+      : { estado };
 
+    const { error } = await supabase.from('citas')
+      .update(cambios).eq('id', id);
     if (error) throw error;
   }
 
-  async programar(id: number, fecha: string, hora: string) {
-    const { error } = await supabase
-      .from('citas')
-      .update({
-        fecha_cita: fecha,
-        hora_cita: hora,
-        estado: 'aceptada'
-      })
+  async programar(id: number, fecha: string, hora: string): Promise<void> {
+    const { error } = await supabase.from('citas')
+      .update({ fecha_cita: fecha, hora_cita: hora, estado: 'aceptada' })
       .eq('id', id);
+    if (error) throw error;
+  }
 
+  async eliminar(id: number): Promise<void> {
+    const { error } = await supabase.from('citas').delete().eq('id', id);
     if (error) throw error;
   }
 }

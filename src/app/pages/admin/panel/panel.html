@@ -10,37 +10,33 @@
   <section class="encabezado">
     <span class="etiqueta">ADMINISTRACIÓN</span>
     <h1>Solicitudes de citas</h1>
-    <p>Gestiona solicitudes y programa citas.</p>
+    <p>Gestiona las solicitudes y programa las citas.</p>
   </section>
 
   <p class="error" *ngIf="error" role="alert">{{ error }}</p>
 
   <section class="resumen">
-    <button class="tarjeta" [class.seleccionada]="filtro === 'todas'"
-      (click)="filtro = 'todas'">
+    <button class="tarjeta" [class.seleccionada]="filtro === 'todas'" (click)="filtro = 'todas'">
       Total <strong>{{ citas.length }}</strong>
     </button>
-    <button class="tarjeta" [class.seleccionada]="filtro === 'pendiente'"
-      (click)="filtro = 'pendiente'">
+    <button class="tarjeta" [class.seleccionada]="filtro === 'pendiente'" (click)="filtro = 'pendiente'">
       Pendientes <strong>{{ contar('pendiente') }}</strong>
     </button>
-    <button class="tarjeta" [class.seleccionada]="filtro === 'aceptada'"
-      (click)="filtro = 'aceptada'">
+    <button class="tarjeta" [class.seleccionada]="filtro === 'aceptada'" (click)="filtro = 'aceptada'">
       Aceptadas <strong>{{ contar('aceptada') }}</strong>
     </button>
-    <button class="tarjeta" [class.seleccionada]="filtro === 'rechazada'"
-      (click)="filtro = 'rechazada'">
+    <button class="tarjeta" [class.seleccionada]="filtro === 'rechazada'" (click)="filtro = 'rechazada'">
       Rechazadas <strong>{{ contar('rechazada') }}</strong>
     </button>
   </section>
 
   <section class="listado">
-    <h2>Solicitudes ({{ citasFiltradas.length }})</h2>
+    <div class="listado-titulo">
+      <h2>Solicitudes ({{ citasFiltradas.length }})</h2>
+    </div>
 
-    <p *ngIf="cargando">Cargando...</p>
-    <p *ngIf="!cargando && !citasFiltradas.length">
-      No hay solicitudes.
-    </p>
+    <p *ngIf="cargando">Cargando solicitudes...</p>
+    <p *ngIf="!cargando && !citasFiltradas.length">No hay solicitudes.</p>
 
     <div class="tabla-contenedor" *ngIf="!cargando && citasFiltradas.length">
       <table>
@@ -53,7 +49,7 @@
             <th>Detalles</th>
             <th>Motivo</th>
             <th>Estado</th>
-            <th>Programación</th>
+            <th>Fecha de cita</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -66,35 +62,16 @@
             <td>{{ c.tipo }}<br>Edad: {{ c.edad }}<br>Sexo: {{ c.sexo }}</td>
             <td class="motivo">{{ c.motivo }}</td>
             <td>
-              <span class="estado" [ngClass]="c.estado">
-                {{ c.estado | titlecase }}
-              </span>
+              <span class="estado" [ngClass]="c.estado">{{ c.estado | titlecase }}</span>
             </td>
-            <td class="programacion">
-              <input type="date" [(ngModel)]="c.fecha_cita"
-                [ngModelOptions]="{standalone: true}">
-              <input type="time" [(ngModel)]="c.hora_cita"
-                [ngModelOptions]="{standalone: true}">
-              <button class="aceptar" (click)="guardarProgramacion(c)"
-                [disabled]="actualizandoId === c.id">
-                Programar
-              </button>
+            <td>
+              <ng-container *ngIf="c.estado === 'aceptada'; else sinFecha">
+                {{ c.fecha_cita | date:'dd/MM/yyyy' }}<br>{{ c.hora_cita }}
+              </ng-container>
+              <ng-template #sinFecha>Sin programar</ng-template>
             </td>
-            <td class="acciones-cita">
-              <button class="aceptar" (click)="cambiarEstado(c, 'aceptada')"
-                [disabled]="actualizandoId === c.id || c.estado === 'aceptada'">
-                Aceptar
-              </button>
-              <button class="rechazar" (click)="cambiarEstado(c, 'rechazada')"
-                [disabled]="actualizandoId === c.id || c.estado === 'rechazada'">
-                Rechazar
-              </button>
-              <button class="pendiente" *ngIf="c.estado !== 'pendiente'"
-                (click)="cambiarEstado(c, 'pendiente')"
-                [disabled]="actualizandoId === c.id">
-                Pendiente
-              </button>
-              <span *ngIf="actualizandoId === c.id">Guardando...</span>
+            <td>
+              <button class="ver-acciones" (click)="abrirAcciones(c)">Ver acciones</button>
             </td>
           </tr>
         </tbody>
@@ -102,3 +79,88 @@
     </div>
   </section>
 </main>
+
+<div class="modal-fondo" *ngIf="mostrarAcciones" (click)="cerrarAcciones()">
+  <section class="modal-acciones" role="dialog" aria-modal="true"
+    aria-labelledby="titulo-acciones" (click)="$event.stopPropagation()">
+
+    <button class="cerrar-modal" (click)="cerrarAcciones()" aria-label="Cerrar">&times;</button>
+    <span class="etiqueta">GESTIÓN DE CITA</span>
+    <h2 id="titulo-acciones">Acciones de la solicitud</h2>
+
+    <div class="detalle-cita" *ngIf="citaSeleccionada as c">
+      <div><span>Mascota</span><strong>{{ c.mascota }}</strong></div>
+      <div><span>Propietario</span><strong>{{ c.propietario }}</strong></div>
+      <div><span>Celular</span><strong>{{ c.celular }}</strong></div>
+      <div>
+        <span>Estado</span>
+        <span class="estado" [ngClass]="c.estado">{{ c.estado | titlecase }}</span>
+      </div>
+      <div *ngIf="c.estado === 'aceptada'">
+        <span>Fecha programada</span>
+        <strong>{{ c.fecha_cita | date:'dd/MM/yyyy' }} — {{ c.hora_cita }}</strong>
+      </div>
+    </div>
+
+    <div class="programacion" *ngIf="citaSeleccionada && citaSeleccionada.estado !== 'rechazada'">
+      <h3>{{ citaSeleccionada.estado === 'aceptada' ? 'Reprogramar cita' : 'Programar cita' }}</h3>
+
+      <label for="fecha">Fecha</label>
+      <input id="fecha" type="date" [(ngModel)]="citaSeleccionada.fecha_cita"
+        [ngModelOptions]="{standalone:true}" [class.campo-invalido]="errorProgramacion">
+
+      <label for="hora">Hora</label>
+      <input id="hora" type="time" [(ngModel)]="citaSeleccionada.hora_cita"
+        [ngModelOptions]="{standalone:true}" [class.campo-invalido]="errorProgramacion">
+
+      <p class="aviso-programacion" *ngIf="errorProgramacion">
+        <span>ⓘ</span> Selecciona una fecha y una hora para continuar.
+      </p>
+
+      <button class="aceptar" (click)="guardarProgramacion(citaSeleccionada)"
+        [disabled]="actualizandoId !== null">
+        {{ citaSeleccionada.estado === 'aceptada' ? 'Guardar reprogramación' : 'Programar y aceptar' }}
+      </button>
+    </div>
+
+    <div class="acciones-secundarias" *ngIf="citaSeleccionada as c">
+      <button class="rechazar" *ngIf="c.estado === 'pendiente'"
+        (click)="cambiarEstado(c, 'rechazada')" [disabled]="actualizandoId !== null">
+        Rechazar solicitud
+      </button>
+
+      <button class="pendiente" *ngIf="c.estado !== 'pendiente'"
+        (click)="cambiarEstado(c, 'pendiente')" [disabled]="actualizandoId !== null">
+        Cambiar a pendiente
+      </button>
+
+      <button class="eliminar" (click)="confirmarEliminacion(c)"
+        [disabled]="actualizandoId !== null">Eliminar solicitud</button>
+    </div>
+
+    <p class="mensaje-modal" *ngIf="actualizandoId !== null">Guardando cambios...</p>
+    <button class="cancelar-modal" (click)="cerrarAcciones()"
+      [disabled]="actualizandoId !== null">Cerrar</button>
+  </section>
+</div>
+
+<div class="modal-fondo" *ngIf="mostrarConfirmacion" (click)="cancelarEliminacion()">
+  <section class="modal-confirmacion" role="dialog" aria-modal="true"
+    aria-labelledby="titulo-eliminar" (click)="$event.stopPropagation()">
+
+    <div class="icono-advertencia">!</div>
+    <h2 id="titulo-eliminar">¿Eliminar esta cita?</h2>
+    <p>
+      Se eliminará la solicitud de <strong>{{ citaAEliminar?.mascota }}</strong>,
+      registrada a nombre de <strong>{{ citaAEliminar?.propietario }}</strong>.
+    </p>
+    <p>Esta acción no se puede deshacer.</p>
+
+    <div class="acciones-modal">
+      <button class="cancelar-modal" (click)="cancelarEliminacion()"
+        [disabled]="actualizandoId !== null">Cancelar</button>
+      <button class="eliminar-modal" (click)="eliminarCita()"
+        [disabled]="actualizandoId !== null">Sí, eliminar</button>
+    </div>
+  </section>
+</div>
