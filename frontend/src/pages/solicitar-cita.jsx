@@ -21,31 +21,23 @@ export default function SolicitarCita() {
 
   function actualizarCampo(evento) {
     const { name, value } = evento.target;
-
-    setCita((anterior) => ({
-      ...anterior,
-      [name]: value,
-    }));
-
+    setCita((anterior) => ({ ...anterior, [name]: value }));
     if (error) setError('');
   }
 
   async function enviar(evento) {
     evento.preventDefault();
-
     if (enviando || enviado) return;
 
     setEnviando(true);
     setError('');
 
     try {
-      // Ajusta esta URL a la ruta real de tu backend.
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+
       const respuesta = await fetch(`${apiUrl}/citas`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(cita),
       });
 
@@ -66,157 +58,208 @@ export default function SolicitarCita() {
 
   return (
     <div className="solicitar-pagina">
-      <header className="cita-header">
-        <Link to="/" className="cita-logo" aria-label="Volver al inicio">
-          <img src="/logo.webp" alt="Logo de Vet Ayacucho" />
-        </Link>
-
-        <Link to="/" className="cita-volver">
-          ← Volver al inicio
-        </Link>
-      </header>
-
       <main className="cita-main">
         {!enviado ? (
-          <form className="cita-formulario" onSubmit={enviar}>
-            <h1>Solicitar una cita</h1>
-
-            <p className="cita-descripcion">
-              Completa los datos para solicitar atención para tu mascota.
-            </p>
-
-            <h2>Datos del propietario</h2>
-
-            <label htmlFor="propietario">Nombre y apellidos</label>
-            <input
-              id="propietario"
-              name="propietario"
-              value={cita.propietario}
-              onChange={actualizarCampo}
-              required
-              maxLength={120}
-              autoComplete="name"
+          <div className="cita-formulario-con-gato">
+            <img
+              className="gato-formulario"
+              src="/gatoasomandose.webp"
+              alt=""
+              aria-hidden="true"
             />
 
-            <label htmlFor="celular">Número de celular</label>
-            <input
-              id="celular"
-              name="celular"
-              type="tel"
-              value={cita.celular}
-              onChange={actualizarCampo}
-              placeholder="Ej. 987654321"
-              maxLength={9}
-              minLength={9}
-              pattern="[0-9]{9}"
-              inputMode="numeric"
-              autoComplete="tel"
-              title="Ingresa un número de celular de 9 dígitos."
-              required
-            />
+            <form className="cita-formulario" onSubmit={enviar}>
+              <div className="cita-cabecera-formulario">
+                <img
+                  className="cita-logo"
+                  src="/logo.webp"
+                  alt="Logo de Vet Ayacucho"
+                />
 
-            <h2>Datos de la mascota</h2>
+                <p className="cita-etiqueta">VET AYACUCHO</p>
+                <h1>Solicitar una cita</h1>
+                <p className="cita-descripcion">
+                  Completa los datos y coordinaremos la atención de tu mascota.
+                </p>
+              </div>
 
-            <label htmlFor="mascota">Nombre de la mascota</label>
-            <input
-              id="mascota"
-              name="mascota"
-              value={cita.mascota}
-              onChange={actualizarCampo}
-              required
-              maxLength={100}
-            />
+              <section className="cita-seccion">
+                <h2>
+                  <span>01</span>
+                  Datos del propietario
+                </h2>
 
-            <label htmlFor="edad">Edad</label>
-            <input
-              id="edad"
-              name="edad"
-              value={cita.edad}
-              onChange={actualizarCampo}
-              placeholder="Ej. 2 años"
-              maxLength={30}
-              required
-            />
+                <div className="cita-grid">
+                  <div className="cita-campo">
+                    <label htmlFor="propietario">Nombre y apellidos</label>
+                    <input
+                      id="propietario"
+                      name="propietario"
+                      value={cita.propietario}
+                      onChange={actualizarCampo}
+                      autoComplete="name"
+                      maxLength={120}
+                      required
+                    />
+                  </div>
 
-            <label htmlFor="tipo">Tipo de mascota</label>
-            <input
-              id="tipo"
-              name="tipo"
-              value={cita.tipo}
-              onChange={actualizarCampo}
-              placeholder="Ej. Perro - Labrador"
-              maxLength={100}
-              required
-            />
+                  <div className="cita-campo">
+                    <label htmlFor="celular">Número de celular</label>
+                    <input
+                      id="celular"
+                      name="celular"
+                      type="tel"
+                      value={cita.celular}
+                      onChange={actualizarCampo}
+                      placeholder="Ej. 987654321"
+                      maxLength={9}
+                      minLength={9}
+                      pattern="[0-9]{9}"
+                      inputMode="numeric"
+                      autoComplete="tel"
+                      title="Ingresa un número de celular de 9 dígitos."
+                      required
+                    />
+                  </div>
+                </div>
+              </section>
 
-            <small>Especificar raza si es posible.</small>
+              <section className="cita-seccion">
+                <h2>
+                  <span>02</span>
+                  Datos de la mascota
+                </h2>
 
-            <label htmlFor="sexo">Sexo</label>
-            <select
-              id="sexo"
-              name="sexo"
-              value={cita.sexo}
-              onChange={actualizarCampo}
-              required
-            >
-              <option value="" disabled>
-                Selecciona una opción
-              </option>
-              <option value="Macho">Macho</option>
-              <option value="Hembra">Hembra</option>
-              <option value="No sé">No lo sé</option>
-            </select>
+                <div className="cita-grid">
+                  <div className="cita-campo">
+                    <label htmlFor="mascota">Nombre de la mascota</label>
+                    <input
+                      id="mascota"
+                      name="mascota"
+                      value={cita.mascota}
+                      onChange={actualizarCampo}
+                      maxLength={100}
+                      required
+                    />
+                  </div>
 
-            <h2>Motivo de consulta</h2>
+                  <div className="cita-campo">
+                    <label htmlFor="edad">Edad</label>
+                    <input
+                      id="edad"
+                      name="edad"
+                      value={cita.edad}
+                      onChange={actualizarCampo}
+                      placeholder="Ej. 2 años"
+                      maxLength={30}
+                      required
+                    />
+                  </div>
 
-            <label htmlFor="motivo">Describe el motivo de la cita</label>
-            <textarea
-              id="motivo"
-              name="motivo"
-              value={cita.motivo}
-              onChange={actualizarCampo}
-              required
-              maxLength={1000}
-              rows={4}
-              placeholder="Cuéntanos qué necesita tu mascota"
-            />
+                  <div className="cita-campo">
+                    <label htmlFor="tipo">Tipo de mascota y raza</label>
+                    <input
+                      id="tipo"
+                      name="tipo"
+                      value={cita.tipo}
+                      onChange={actualizarCampo}
+                      placeholder="Ej. Perro - Labrador"
+                      maxLength={100}
+                      required
+                    />
+                    <small>Especifica la raza si la conoces.</small>
+                  </div>
 
-            <p className="cita-aviso">
-              La solicitud quedará pendiente hasta que la veterinaria la revise.
-            </p>
+                  <div className="cita-campo">
+                    <label htmlFor="sexo">Sexo</label>
+                    <select
+                      id="sexo"
+                      name="sexo"
+                      value={cita.sexo}
+                      onChange={actualizarCampo}
+                      required
+                    >
+                      <option value="" disabled>
+                        Selecciona una opción
+                      </option>
+                      <option value="Macho">Macho</option>
+                      <option value="Hembra">Hembra</option>
+                      <option value="No sé">No lo sé</option>
+                    </select>
+                  </div>
+                </div>
+              </section>
 
-            {error && (
-              <p className="cita-error" role="alert">
-                {error}
+              <section className="cita-seccion">
+                <h2>
+                  <span>03</span>
+                  Motivo de consulta
+                </h2>
+
+                <div className="cita-campo">
+                  <label htmlFor="motivo">¿Qué necesita tu mascota?</label>
+                  <textarea
+                    id="motivo"
+                    name="motivo"
+                    value={cita.motivo}
+                    onChange={actualizarCampo}
+                    maxLength={1000}
+                    rows={3}
+                    placeholder="Describe brevemente el motivo de la cita..."
+                    required
+                  />
+                </div>
+              </section>
+
+              <p className="cita-aviso">
+                <span>ℹ</span>
+                Tu solicitud quedará pendiente hasta que la veterinaria la revise.
               </p>
-            )}
 
-            <button type="submit" disabled={enviando}>
-              {enviando ? 'Enviando...' : 'Enviar solicitud →'}
-            </button>
-          </form>
+              {error && (
+                <p className="cita-error" role="alert">
+                  {error}
+                </p>
+              )}
+
+              <button className="cita-boton-enviar" type="submit" disabled={enviando}>
+                {enviando ? 'Enviando solicitud...' : 'Enviar solicitud'}
+                {!enviando && <span>→</span>}
+              </button>
+
+              <Link className="cita-boton-regresar" to="/">
+                <span>←</span>
+                Volver al inicio
+              </Link>
+
+              <p className="cita-pie">Cuidamos de quienes hacen especial tu vida.</p>
+            </form>
+          </div>
         ) : (
           <section className="cita-confirmacion" role="status">
-            <div className="cita-confirmacion-texto">
-              <span className="cita-check">✓</span>
+            <img
+              className="cita-logo-confirmacion"
+              src="/logo.webp"
+              alt="Vet Ayacucho"
+            />
 
-              <h1>¡Gracias por solicitar una cita!</h1>
-
-              <p>
-                Nos pondremos en contacto con usted para coordinar la atención
-                de su mascota.
-              </p>
-
-              <Link className="cita-btn-inicio" to="/">
-                Volver al inicio →
-              </Link>
-            </div>
+            <span className="cita-check">✓</span>
+            <h1>¡Gracias por solicitar una cita!</h1>
+            <p>
+              Nos pondremos en contacto contigo para coordinar la atención de
+              tu mascota.
+            </p>
 
             <img
+              className="cita-imagen-gracias"
               src="/graciasporcita.webp"
               alt="Gracias por confiar en nuestra veterinaria"
-              loading="lazy"
             />
+
+            <Link className="cita-boton-regresar" to="/">
+              <span>←</span>
+              Volver al inicio
+            </Link>
           </section>
         )}
       </main>
