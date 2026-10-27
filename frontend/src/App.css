@@ -1,0 +1,13 @@
+
+.pagina-pendiente {
+  max-width: 800px;
+  margin: 80px auto;
+  padding: 24px;
+  text-align: center;
+}
+
+.pagina-pendiente a {
+  color: #28764b;
+  text-decoration: none;
+  font-weight: 600;
+}

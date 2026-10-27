@@ -1,0 +1,8 @@
+enviroment
+export const environment = {
+  production: false,
+  supabaseUrl: 'https://jjuxxbfyzgtvkkrbspvw.supabase.co',
+  supabasePublishableKey: 'sb_publishable_MlZuBbo6GLuqJe-rgnYOXQ_nYn4UDXY '
+};
+
+git clone https://github.com/Bennykek/trabajoseminario.git
